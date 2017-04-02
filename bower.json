@@ -1,0 +1,22 @@
+{
+  "name": "cubecnt",
+  "authors": [
+    "Ronald Suez <rsuez93@gmail.com>"
+  ],
+  "description": "",
+  "main": "app.js",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "bower_components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.8"
+  }
+}
