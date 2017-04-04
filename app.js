@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 var bluebird = require('bluebird');
 mongoose.Promise = bluebird
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.MONGODB_URI);
 
 var app = express();
 // view engine setup
