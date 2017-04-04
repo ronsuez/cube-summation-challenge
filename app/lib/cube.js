@@ -108,9 +108,7 @@ function updateValue(cube, coordinates, value, cb) {
 
   matrix[x][y][z] = parseInt(value);
 
-  // cube.state = matrix;
 
-  // cube.save();
 
   Cube.update({ _id: cube._id }, { $set: { state: matrix } }, function(err, cubeUpdated) {
 
@@ -120,16 +118,6 @@ function updateValue(cube, coordinates, value, cb) {
   });
 
 
-  // promise.then(function(doc) {
-  //   History.create({
-  //     cube: cube._id,
-  //     coordinates: formattedCoordinates,
-  //     value: value
-  //   });
-  //   return cb(null, {
-  //     value: value
-  //   });
-  // });
 };
 
 /**

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -12,10 +14,9 @@ var cubes = require('./app/routes/cubes');
 
 var mongoose = require('mongoose');
 var bluebird = require('bluebird');
-//mongoose.connect('mongodb://heroku_xtmtls95:k00qns89u2dj4ni46hpilt9c84@ds153677.mlab.com:53677/heroku_xtmtls95'); // connect to our database
 mongoose.Promise = bluebird
 
-mongoose.connect('mongodb://localhost/cube_sumation');
+mongoose.connect(process.env.DATABASE_URL);
 
 var app = express();
 // view engine setup

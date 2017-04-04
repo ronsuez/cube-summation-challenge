@@ -10,7 +10,6 @@ module.exports = {
 }
 
 function findAll(req, res) {
-  console.log('hola');
   Cube.find({}, function(err, cubes) {
     if (err) return res.json({ err });
     // saved!
@@ -79,8 +78,6 @@ function updateValue(req, res) {
 function queryValue(req, res) {
 
   Cube.findById(req.params.id).then((resp) => {
-
-    console.log(resp);
 
     if (!resp) return { status: 'find-not-ok', err: 'Could not find cube', _id: req.params.id };
 
