@@ -88,7 +88,7 @@ function updateValue(cube, coordinates, value, cb) {
   }
 
   var formattedCoordinates = coordinates.map(function(i) {
-    return i - 1;
+    return parseInt(i) - 1;
   })
 
   if (!checkCoordinates(cube.dimension, formattedCoordinates)) {
@@ -104,19 +104,32 @@ function updateValue(cube, coordinates, value, cb) {
     y = formattedCoordinates[1],
     z = formattedCoordinates[2];
 
-  matrix[x][y][z] = value;
-  cube.state = matrix;
-  var promise = cube.save();
-  promise.then(function(doc) {
-    History.create({
-      cube: cube._id,
-      coordinates: formattedCoordinates,
-      value: value
-    });
-    return cb(null, {
-      value: value
-    });
+  console.log(x, y, z);
+
+  matrix[x][y][z] = parseInt(value);
+
+  // cube.state = matrix;
+
+  // cube.save();
+
+  Cube.update({ _id: cube._id }, { $set: { state: matrix } }, function(err, cubeUpdated) {
+
+    console.log(err, cubeUpdated);
+
+    return cb(err, { value: parseInt(value), state: cube });
   });
+
+
+  // promise.then(function(doc) {
+  //   History.create({
+  //     cube: cube._id,
+  //     coordinates: formattedCoordinates,
+  //     value: value
+  //   });
+  //   return cb(null, {
+  //     value: value
+  //   });
+  // });
 };
 
 /**
@@ -130,6 +143,8 @@ function updateValue(cube, coordinates, value, cb) {
  */
 function queryValue(cube, origin, destination, cb) {
 
+  console.log(origin, destination);
+
 
   if (!cube || typeof cube != 'object') {
     return cb({
@@ -138,11 +153,11 @@ function queryValue(cube, origin, destination, cb) {
   }
 
   var formattedOrigin = origin.map(function(i) {
-    return i - 1;
+    return parseInt(i) - 1;
   });
 
   var formattedDestination = destination.map(function(i) {
-    return i - 1;
+    return parseInt(i) - 1;
   });
 
   if (!checkCoordinates(cube.dimension, formattedOrigin) ||
@@ -153,6 +168,8 @@ function queryValue(cube, origin, destination, cb) {
       destination: formattedDestination
     });
   }
+
+  console.log(formattedOrigin, formattedDestination);
 
   var matrix = cube.state;
 
@@ -165,7 +182,8 @@ function queryValue(cube, origin, destination, cb) {
     }
   }
   return cb(null, {
-    total: sum
+    total: sum,
+    state: matrix
   });
 };
 

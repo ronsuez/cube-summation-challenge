@@ -4,14 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+var routes = require('./app/routes/index');
+var users = require('./app/routes/users');
+var cubes = require('./app/routes/cubes');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var cubes = require('./routes/cubes');
 
-
-var mongoose   = require('mongoose');
+var mongoose = require('mongoose');
+var bluebird = require('bluebird');
 //mongoose.connect('mongodb://heroku_xtmtls95:k00qns89u2dj4ni46hpilt9c84@ds153677.mlab.com:53677/heroku_xtmtls95'); // connect to our database
+mongoose.Promise = bluebird
 
 mongoose.connect('mongodb://localhost/cube_sumation');
 
@@ -27,10 +29,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors());
 app.use('/', routes);
-app.use('/users', users);
-app.use('/cubes', cubes);
+app.use('/api/cube', cubes);
+app.use('/api/user', users);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
