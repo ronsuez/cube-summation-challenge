@@ -1,4 +1,4 @@
-# Cube Summation - Rappi challenge
+# Cube Summation - API Service
 
 ### Exercise details
 * [hackerrank-cube-summation](https://www.hackerrank.com/challenges/cube-summation)
